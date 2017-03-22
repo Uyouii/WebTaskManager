@@ -43,6 +43,22 @@ function addDataTable(data) {
         newRow.insertCell().innerHTML = getRemainingTime(data[i].taskDDL,datetime.substr(11,5));
         newRow.insertCell().innerHTML = data[i].taskDescription;
 
+
+        var loc = newRow.cells[4].innerText.indexOf('d');
+        var diffDay = newRow.cells[4].innerText.substr(0,loc);
+        if(parseInt(diffDay) < 0) {
+
+        }
+        else if(parseInt(diffDay) == 0) {
+            newRow.setAttribute("class","danger");
+        }
+        else if(parseInt(diffDay) < 3) {
+            newRow.setAttribute("class","warning");
+        }
+        else if(parseInt(diffDay) < 7) {
+            newRow.setAttribute("class","info");
+        }
+
         num++;
     }
 
@@ -52,7 +68,11 @@ function setRemainingTime() {
     var table = document.getElementById("listTable");
     var rows = table.rows;
     for(var i = 1; i < rows.length ;i++) {
-        rows[i].cells[4].innerHTML = getRemainingTime(rows[i].cells[2].innerText.substr(0,10),rows[i].cells[2].innerText.substr(11,5));
+        //不判断的话删除数据时会出错
+        if(rows[i].cells[2] == undefined)
+            continue;
+        var str = rows[i].cells[2].innerText;
+        rows[i].cells[4].innerHTML = getRemainingTime(str.substr(0,10),str.substr(11,5));
     }
 }
 
@@ -63,9 +83,10 @@ function getRemainingTime(date,time) {
     DDLDate.setMinutes( time.substr(3,2) );
     var diff = DDLDate.getTime() - todayDate.getTime();
     if(diff <= 0)
-        return "00d 00h 00m 00s";
+        return "-1d -1:-1:-1";
     else {
         var diffDay = Math.floor(diff / (24 * 3600 * 1000));
+
         diff %= 24 * 3600 * 1000;
         var diffHour = Math.floor(diff / (3600 * 1000));
         if(diffHour < 10)
@@ -79,7 +100,7 @@ function getRemainingTime(date,time) {
         var diffSec = Math.floor(diff / 1000);
         if(diffSec < 10)
             diffSec = '0' + diffSec;
-        return diffDay + "d " + diffHour + "h " + diffMin + "m " + diffSec + "s";
+        return diffDay + "d " + diffHour + ":" + diffMin + ":" + diffSec;
     }
 }
 
@@ -104,12 +125,12 @@ function deleteButton() {
     }
     var tipText = document.getElementById("tipText2");
 
-    if(deleteLines.length > 0) {
+    if(deleteLines.length == 0) {
         tipText.innerText = "Hasn't choose any lines.";
     }
     else {
         tipText.innerText = "Confirm Delete these lines?\n";
-        tipText.innerText += "Click ok to delete.";
+        tipText.innerText += "Click OK to delete.";
     }
     $('#myModal2').modal('show');
 }

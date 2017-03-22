@@ -4,7 +4,7 @@ body{
 
 .navTitle {
     color: #00CDCD;
-    font-size: 170%;
+    font-size: 200%;
     padding-top: 6px;
 }
 
@@ -32,3 +32,10 @@ iframe {
 .my-button {
     width: 100px;
 }
+
+th {
+    background-color: #1f1f1f;
+    color: #e7e7e7;
+    height: 120%;
+}
+
