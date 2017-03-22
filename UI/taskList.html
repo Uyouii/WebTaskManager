@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>taskList</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+
+    <script src="../js/taskList.js"></script>
+    <link rel="stylesheet" href="../css/taskManager.css"/>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+
+        </div>
+
+        <div class="col-md-10">
+            <div class="row Space">
+                <ul class="nav nav-tabs  navTitle">
+                    <li><a href="taskList.html" >TaskList</a></li>
+                    <li><a href="addTask.html" >AddTask</a></li>
+                    <li><a href="#">Writings</a></li>
+                </ul>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-md-9 col-md-offset-1">
+                    <table class="table table-hover table-striped text-center" id="listTable" style="font-size: 130%;">
+                        <tr>
+                            <th class="text-center">Operation</th>
+                            <th class="text-center">Number</th>
+                            <th class="text-center">DeadLine</th>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">Description</th>
+                        </tr>
+                    </table>
+
+                    <br>
+
+                    <div class="col-md-2">
+                        <button class="btn btn-primary my-button" style="font-size: 120%" onclick=addTask()>
+                            Add Task
+                        </button>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button class="btn btn-primary my-button " style="font-size: 120%" onclick=deleteButton()>
+                            Delete
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Tips</h4>
+            </div>
+            <div class="modal-body" id="tipText">在这里添加一些文本</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel2">Tips</h4>
+            </div>
+            <div class="modal-body" id="tipText2">在这里添加一些文本</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick=deleteRow()>OK</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+
+
+</body>
+</html>

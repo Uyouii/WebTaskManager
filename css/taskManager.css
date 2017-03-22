@@ -1,0 +1,34 @@
+body{
+    font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+}
+
+.navTitle {
+    color: #00CDCD;
+    font-size: 170%;
+    padding-top: 6px;
+}
+
+.Space {
+    padding :20px;
+}
+
+.addTaskPage {
+    font-size: 130%;
+}
+
+.myText {
+    font-size: 20px;
+}
+
+.myInput {
+    font-size: 18px;
+}
+
+
+iframe {
+    min-height: 700px;
+}
+
+.my-button {
+    width: 100px;
+}
