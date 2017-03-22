@@ -3,6 +3,11 @@
  */
 window.onload = function () {
 
+    var DDL = document.getElementById("inputDDL");
+    DDL.value = getCurrentDate();
+
+    var time = document.getElementById("inputTime");
+    time.value = "23:59";
 };
 
 
@@ -90,5 +95,17 @@ function checkInput() {
         document.getElementById("inputNameGroup").setAttribute("class","form-group");
 
     return readyReturn;
+}
+
+function getCurrentDate() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    if(month < 10)
+        month = "0" + month;
+    var day = date.getDate();
+    if(day < 10)
+        day = "0" + day;
+    return year + "-" + month + "-" + day;
 }
 
