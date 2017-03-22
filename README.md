@@ -1,5 +1,4 @@
 ##WebTaskManager
-
 web端任务管理系统，可以添加，删除任务。
 
 前端采用的bootstrap框架。
