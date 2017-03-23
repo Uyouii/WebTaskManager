@@ -17,8 +17,10 @@ Apache + php + mysql
 
 ### 暂时效果图
 
+![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture1.png)
 
+> 列表显示task
 
-> picture1
+![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture2.png)
 
-> picture2
+> 添加task
