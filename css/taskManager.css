@@ -36,6 +36,9 @@ iframe {
 th {
     background-color: #1f1f1f;
     color: #e7e7e7;
-    height: 120%;
+}
+
+td {
+    height: 45px;
 }
 

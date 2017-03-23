@@ -13,5 +13,12 @@ Task表格的显示了Task的名称，截止日期，备注等。<br>
 
 
 ### 需要环境
->Apache + php + mysql
+Apache + php + mysql
 
+### 暂时效果图
+
+
+
+> picture1
+
+> picture2

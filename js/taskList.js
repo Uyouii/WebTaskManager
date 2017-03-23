@@ -12,6 +12,7 @@ window.onload = function () {
 };
 
 
+
 function fillTable() {
     $.post("../php/taskList.php",
         function(data){
@@ -147,34 +148,18 @@ function deleteRow() {
     for(i = 0; i < deleteLines.length;i++) {
         var ddl = rows[deleteLines[i]].cells[2].innerText.substr(0,10);
         var name = rows[deleteLines[i]].cells[3].innerText;
-        deleteOneInDB(ddl,name,deleteLines[i]);
+        if(i == deleteLines.length - 1)
+            deleteOneInDB(ddl,name,deleteLines[i],true);
+        else deleteOneInDB(ddl,name,deleteLines[i],false);
     }
 
-    var tipText = document.getElementById("tipText");
-    tipText.innerText = "Successfully delete " + successfulDelete.length + " tasks.\n";
-    if(failDelete.length > 0) {
-        tipText.innerText += "Fail to delete ";
-        for(var j = 0; j < failDelete.length;j++) {
-            tipText.innerText += "[line " + failDelete[j] + "] ";
-        }
-        tipText.innerText += ".";
-    }
-
-    $('#myModal').modal('show');
-
-    deleteLines = [];
-    successfulDelete = [];
-    failDelete = [];
-
-    clearTable();
-    fillTable();
 
 }
 
 
 
 
-function deleteOneInDB(taskDDL,taskName,line) {
+function deleteOneInDB(taskDDL,taskName,line,update) {
     $.post("../php/deleteTask.php",
         {
             name: taskName,
@@ -187,6 +172,27 @@ function deleteOneInDB(taskDDL,taskName,line) {
             }
             else {
                 failDelete[failDelete.length] = line;
+            }
+
+            if(update == true) {
+                var tipText = document.getElementById("tipText");
+                tipText.innerText = "Successfully delete " + successfulDelete.length + " tasks.\n";
+                if(failDelete.length > 0) {
+                    tipText.innerText += "Fail to delete ";
+                    for(var j = 0; j < failDelete.length;j++) {
+                        tipText.innerText += "[line " + failDelete[j] + "] ";
+                    }
+                    tipText.innerText += ".";
+                }
+
+                $('#myModal').modal('show');
+
+                deleteLines = [];
+                successfulDelete = [];
+                failDelete = [];
+
+                clearTable();
+                fillTable();
             }
         }
     );

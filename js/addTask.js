@@ -11,6 +11,7 @@ window.onload = function () {
 };
 
 
+
 function submitInput() {
     var readySubmit = true;
     var DDL = document.getElementById("inputDDL").value;
