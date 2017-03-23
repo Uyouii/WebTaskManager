@@ -16,11 +16,12 @@ Task表格的显示了Task的名称，截止日期，备注等。<br>
 Apache + php + mysql
 
 ### 暂时效果图
-
-![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture1.png)
-
 > 列表显示task
 
-![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture2.png)
+![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture1.png)
+<br>
 
 > 添加task
+
+![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture2.png)
+<br>
