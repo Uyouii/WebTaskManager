@@ -38,6 +38,6 @@ Apache + php + mysql
 
 > 修改task
 
-![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture4.png)
+![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture4.PNG)
 <br>
 
