@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>addTask</title>
+    <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/taskManager.css"/>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="col-lg-4 col-sm-6 col-xs-12">
+        <ul class="nav nav-tabs">
+            <li>
+                <a data-toggle="tab" href="#login">Login</a>
+            </li>
+
+            <li class="active">
+
+                <a data-toggle="tab" href="#und-reg">Register</a>
+            </li>
+
+        </ul>
+
+        <div class="tab-content">
+            <!-- Login panel -->
+
+            <div id="login" class="tab-pane fade">
+
+                <form role="form" method="post">
+                    <div class="form-group">
+                        <label>学号/邮箱</label>
+                        <input type="text" class="form-control" name="userid" maxlength="100" title=""/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="password" class="form-control" name="password" maxlength="20" title=""/>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">登录</button>
+
+                    <a data-toggle="modal" data-target="#forget-pass" style="margin-top: 6px; float: right; cursor: pointer;">忘记密码</a>
+                </form>
+            </div>
+
+            <div id="und-reg" class="tab-pane fade in active">
+
+                <form role="form" method="post">
+                    <input type='hidden' name='csrfmiddlewaretoken' value='llHTl5eHya38s9dDELin7FvXw16UsswWfsZ1m03XA2qh7ggJglww3NmCFLyttMkw' />
+                    <div class="form-group">
+                        <label>学号</label>
+                        <input type="text" class="form-control" name="userid" maxlength="100" title=""/>
+                    </div>
+
+                    <div class="form-group">
+                        <label><a href="http://jwbinfosys.zju.edu.cn/default2.aspx">教务网</a>密码</label>
+                        <input type="password" class="form-control" name="authpass" title=""/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>登录密码</label>
+                        <input type="password" class="form-control" name="loginpass" maxlength="20" placeholder="用于登录报名页面的密码" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>确认密码</label>
+                        <input type="password" class="form-control" name="confirm" maxlength="20" title=""/>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">注册</button>
+                </form>
+            </div>
+
+    </div>
+</div>
+
+</body>
+</html>

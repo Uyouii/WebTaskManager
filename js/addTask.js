@@ -3,13 +3,16 @@
  */
 window.onload = function () {
 
+   setInput();
+};
+
+function setInput() {
     var DDL = document.getElementById("inputDDL");
     DDL.value = getCurrentDate();
 
     var time = document.getElementById("inputTime");
     time.value = "23:59";
-};
-
+}
 
 
 function submitInput() {
@@ -60,6 +63,7 @@ function submitInput() {
                 $('#myModal').modal('show');
             });
         clearInput();
+        setInput();
     }
 }
 

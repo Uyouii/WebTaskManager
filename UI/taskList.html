@@ -15,6 +15,7 @@
 <body>
 
 <div class="container-fluid" >
+
     <div class="row">
         <div class="col-md-2" >
             <br><br>
@@ -69,8 +70,11 @@
                     <br>
 
                     <div class="col-md-2">
-                        <button class="btn btn-primary my-button" style="font-size: 120%" onclick=addTask()>
-                            Add Task
+                        <button class="btn btn-primary my-button" style="font-size: 120%" id="modifyButton"
+                                title="Waring" data-container="body" data-toggle="popover" data-placement="bottom"
+                                data-content="Hasn't select line!"
+                                onclick=modify()>
+                            Modify
                         </button>
                     </div>
 
@@ -83,9 +87,13 @@
                 </div>
             </div>
 
+            <br>
+
+
         </div>
 
     </div>
+
 
 </div>
 
@@ -117,6 +125,57 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick=deleteRow()>OK</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="modifyModalLabel">Modify Task</h4>
+            </div>
+            <div class="modal-body" id="modifyTipText">
+                <div class="container">
+                    <div class="row">
+                        <form class="form-horizontal " action="../php/addTask.php" method="post" >
+                            <div class="form-group" id="inputDDLGroup">
+                                <label class="col-sm-1 control-label ">Date</label>
+                                <div class="col-sm-4">
+                                    <input type="date" name="taskDDL" id="inputDDL" class="form-control myInput"  title="DeadLine">
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="inputTimeGroup">
+                                <label class="col-sm-1 control-label ">Time</label>
+                                <div class="col-sm-4">
+                                    <input type="time" name="taskTime" id="inputTime" class="form-control myInput"  title="DeadLine">
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="inputNameGroup">
+                                <label class="col-sm-1 control-label ">TaskName</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="taskName" id="inputTaskName" class="form-control myInput"  title="taskName">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label ">Description</label>
+                                <div class="col-sm-4">
+                                    <textarea name="taskDescription" class="form-control myText" id="inputDescription" rows="10" title="Description"></textarea>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick=modifyDatabase()>Modify</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->

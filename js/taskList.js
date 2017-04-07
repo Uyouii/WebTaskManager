@@ -1,18 +1,20 @@
 /**
  * Created by 泰佑 on 2017/3/4.
  */
+
+
 var showData;
 var successfulDelete = [];  //记录成功删除的行号
 var failDelete = [];        //记录没有成功删除的行，一般不存在
 var deleteLines = [];       //记录准备删除的行号
+var deleteLine = [];       //记录准备删除的行号
 
 window.onload = function () {
     fillTable();
     setInterval("setRemainingTime()",1000);
 };
 
-
-
+//从数据库获取数据后填充表格
 function fillTable() {
     $.post("../php/taskList.php",
         function(data){
@@ -42,7 +44,34 @@ function addDataTable(data) {
         newRow.insertCell().innerHTML = datetime;
         newRow.insertCell().innerHTML = data[i].taskName;
         newRow.insertCell().innerHTML = getRemainingTime(data[i].taskDDL,datetime.substr(11,5));
-        newRow.insertCell().innerHTML = data[i].taskDescription;
+        newRow.datanum = i;
+
+        if(data[i].taskDescription.length > 8) {
+            var button = document.createElement("button");
+            button.innerText = "Details";
+            button.id = "i";
+            button.setAttribute("title","Descriptions");
+            button.setAttribute("class","btn btn-default");
+            button.setAttribute("data-container","body");
+            button.setAttribute("data-toggle","popover");
+            button.setAttribute("data-placement","top");
+            button.setAttribute("data-content",data[i].taskDescription.toString());
+
+
+            button.onmouseover = function () {
+
+                //document.getElementById(this.id).popover('show');
+                $("#" + this.id).popover("show");
+            };
+
+            button.onmouseout = function () {
+                $("#" + this.id).popover("hide");
+            };
+
+            newRow.insertCell().appendChild(button);
+        }
+        else
+            newRow.insertCell().innerHTML = data[i].taskDescription;
 
 
         var loc = newRow.cells[4].innerText.indexOf('d');
@@ -62,14 +91,23 @@ function addDataTable(data) {
 
         num++;
     }
-
 }
 
+
+
 function setRemainingTime() {
+
+    //判断表格内容是否加载出来，如果没有加载出来则重新加载
+    if(document.getElementById("listTable").rows.length <= 1) {
+        clearTable();
+        fillTable();
+    }
+
     var table = document.getElementById("listTable");
     var rows = table.rows;
     for(var i = 1; i < rows.length ;i++) {
-        //不判断的话删除数据时会出错
+        //不判断的话删除数据时会出错(刷新时可能会出现数据已经删除但是没有添加进的情况)
+        //这时更新数据则会出错
         if(rows[i].cells[2] == undefined)
             continue;
         var str = rows[i].cells[2].innerText;
@@ -138,7 +176,6 @@ function deleteButton() {
 
 
 function deleteRow() {
-    $('#myModal2').modal('hide');
     if(deleteLines.length  == 0)
         return ;
 
@@ -152,11 +189,7 @@ function deleteRow() {
             deleteOneInDB(ddl,name,deleteLines[i],true);
         else deleteOneInDB(ddl,name,deleteLines[i],false);
     }
-
-
 }
-
-
 
 
 function deleteOneInDB(taskDDL,taskName,line,update) {
@@ -174,6 +207,8 @@ function deleteOneInDB(taskDDL,taskName,line,update) {
                 failDelete[failDelete.length] = line;
             }
 
+            //判断在删除完最后一个勾选的task之后再更新表格
+            //防止表格的更新在异步删除数据的操作之前
             if(update == true) {
                 var tipText = document.getElementById("tipText");
                 tipText.innerText = "Successfully delete " + successfulDelete.length + " tasks.\n";
@@ -184,8 +219,8 @@ function deleteOneInDB(taskDDL,taskName,line,update) {
                     }
                     tipText.innerText += ".";
                 }
-
-                $('#myModal').modal('show');
+                $('#myModal2').modal('hide');
+                //$('#myModal').modal('show');  //提示删除了多少行
 
                 deleteLines = [];
                 successfulDelete = [];
@@ -199,9 +234,87 @@ function deleteOneInDB(taskDDL,taskName,line,update) {
 }
 
 function clearTable() {
-    $("#listTable").find("tr:not(:first)").empty("");
+    //$("#listTable").find("tr:not(:first)").empty("");
+    var table=document.getElementById("listTable");
+    var len=table.rows.length;
+    for(var i=len - 1;i>0;i--){
+        table.deleteRow(i);
+    }
 }
 
 function addTask() {
     window.location = "../UI/addTask.html";
 }
+
+function modify() {
+
+    var table = document.getElementById("listTable");
+    var rows = table.rows;
+    var line = 0;
+    for(var i = 1; i < rows.length; i++) {
+        var checkbox = rows[i].cells[0].firstElementChild;
+        if(checkbox.checked == true) {
+            line = i;
+            break;
+        }
+    }
+    if(line == 0) {
+        //显示提示信息
+        $("#modifyButton").popover("show");
+    }
+    else {
+        $("#modifyButton").popover("destroy");
+
+        var ddl = document.getElementById("inputDDL");
+        var time = document.getElementById("inputTime");
+        var name = document.getElementById("inputTaskName");
+        var description = document.getElementById("inputDescription");
+
+        ddl.value = showData[rows[i].datanum].taskDDL;
+        time.value = showData[rows[i].datanum].taskTime;
+        name.value = showData[rows[i].datanum].taskName;
+        description.value = showData[rows[i].datanum].taskDescription;
+
+        $('#modifyModal').modal('show');
+    }
+}
+
+function modifyDatabase() {
+    var ddl = document.getElementById("inputDDL").value;
+    var time = document.getElementById("inputTime").value;
+    var name = document.getElementById("inputTaskName").value;
+    var description = document.getElementById("inputDescription").value;
+    var tip = document.getElementById("tipText");
+
+    $.post("../php/modifyTask.php",
+    {
+        name: name,
+        ddl : ddl,
+        time : time,
+        description : description
+    },
+    function(data){
+        var obj = JSON.parse(data);
+        if(obj.type == 0) {
+            document.getElementById("tipText").setAttribute("class", "modal-body has-error");
+            tip.innerHTML = "Fail to modify ddl " + name + ". This taskName and time has existed.";
+        }
+        else if(obj.type == 1) {
+            document.getElementById("tipText").setAttribute("class","modal-body has-success");
+            tip.innerHTML = "modify task " + name + " successfully!";
+        }
+        else {
+            tip.innerHTML = "The return data is " + obj.type;
+        }
+        $('#modifyModal').modal('hide');
+        $('#myModal').modal('show');
+
+        clearTable();
+        fillTable();
+    });
+
+}
+//
+// $(function () {
+//     $("[data-toggle='popover']").popover();
+// });
