@@ -23,8 +23,8 @@ Task表格的显示了Task的名称，截止日期，备注等。<br>
 
 表格的删除，每次可以删除选中的多个行，但修改只会修改选中的第一个行。<br>
 
-在显示任务描述时，如果任务描述较多，则调用popover（弹出框）显示：当鼠标移入相应按钮时则自动显示相应的任务描述，<br>
-当鼠标移出时则自动隐藏。
+在显示任务描述时，如果任务描述较多，则调用popover（弹出框）显示：<br>
+当鼠标移入相应按钮时则自动显示相应的任务描述，当鼠标移出时则自动隐藏。
 
 
 ### 需要环境
@@ -40,13 +40,13 @@ Apache + php + mysql
 
 >主界面1
 
-![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture1.PNG)
+![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture1.png)
 
 <br>
 
 >主界面2
 
-![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture2.PNG)
+![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture2.png)
 
 <br>
 
@@ -64,6 +64,6 @@ Apache + php + mysql
 
 >添加container
 
-![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture3.PNG)
+![](https://github.com/TaiyouDong/WebTaskManager/blob/master/image/picture3.png)
 
 <br>
