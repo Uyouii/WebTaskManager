@@ -11,6 +11,8 @@ $ddl = $_POST["ddl"];
 $time = $_POST["time"];
 $name = $_POST["name"];
 $description = $_POST["description"];
+$email = $_POST["email"];
+$containername = $_POST["containername"];
 
 
 //链接MySql数据库
@@ -23,10 +25,10 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "delete from tasks where taskName = '$name' && taskDDL = '$ddl';";
+$sql = "delete from tasks where taskName = '$name' && taskDDL = '$ddl' && email = '$email' && containername = '$containername';";
 $conn->query($sql);
 
-$sql = "insert into tasks (taskDDL,taskName,taskTime,taskDescription) values ('$ddl','$name','$time','$description');";
+$sql = "insert into tasks (taskDDL,taskName,taskTime,taskDescription,email,containername) values ('$ddl','$name','$time','$description','$email','$containername');";
 $conn->query($sql);
 
 $response = array('type'=>1,'name'=>$name);

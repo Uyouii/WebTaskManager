@@ -133,8 +133,10 @@ function login() {
                 var obj = JSON.parse(data);
                 var tip = document.getElementById("tipText");
                 if(obj.type == 'success') {
-                    window.location.href="../UI/home.html";
                     document.cookie = "email=" + email +"; path=home.html";
+                    document.cookie = "email=" + email +"; path=taskList.html";
+                    document.cookie = "email=" + email +"; path=addTask.html";
+                    window.location.href="../UI/home.html";
                 }
                 else if(obj.type == 'wrongPassword') {
                     document.getElementById("tipText").setAttribute("class", "modal-body has-error");

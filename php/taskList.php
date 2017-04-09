@@ -6,6 +6,9 @@
  * Time: 16:23
  */
 
+$email = $_POST["email"];
+$containername = $_POST["containername"];
+
 //链接MySql数据库
 $serverName = "localhost";
 $userName = "root";
@@ -16,7 +19,7 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM tasks ORDER BY taskDDL;";
+$sql = "SELECT * FROM tasks where email = '$email' and containername = '$containername' ORDER BY taskDDL;";
 $result = $conn->query($sql);
 $data = array();
 

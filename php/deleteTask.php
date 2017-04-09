@@ -8,6 +8,8 @@
 
 $ddl = $_POST["ddl"];
 $name = $_POST["name"];
+$email = $_POST["email"];
+$containername = $_POST["containername"];
 
 //链接MySql数据库
 $serverName = "localhost";
@@ -20,7 +22,7 @@ if (!$conn) {
 }
 
 if($ddl != '' && $name != '') {
-    $sql = "delete from tasks where taskName = '$name' && taskDDL = '$ddl';";
+    $sql = "delete from tasks where taskName = '$name' && taskDDL = '$ddl' && email = '$email' && containername = '$containername';";
     $conn->query($sql);
     $response = array('type'=>1,'name'=>$name);
     echo json_encode($response);

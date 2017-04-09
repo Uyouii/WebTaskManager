@@ -1,9 +1,21 @@
 /**
  * Created by 泰佑 on 2017/3/4.
  */
-window.onload = function () {
 
-   setInput();
+
+var containername;
+var email;
+
+window.onload = function () {
+    email = getCookie("email");
+    if(email == "") {
+        window.location.href = "Login.html";
+    }
+    else {
+        containername = localStorage.getItem("containername");
+        setInput();
+    }
+
 };
 
 function setInput() {
@@ -45,7 +57,9 @@ function submitInput() {
                 name: taskName,
                 ddl : DDL,
                 time : taskTime,
-                description : taskDescription
+                description : taskDescription,
+                email:email,
+                containername:containername
             },
             function(data){
                 var obj = JSON.parse(data);
@@ -112,5 +126,17 @@ function getCurrentDate() {
     if(day < 10)
         day = "0" + day;
     return year + "-" + month + "-" + day;
+}
+
+function getCookie(cname)
+{
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++)
+    {
+        var c = ca[i].trim();
+        if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+    }
+    return "";
 }
 

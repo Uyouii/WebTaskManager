@@ -125,8 +125,10 @@ function deleteContainerinDatabase() {
             if (nowContainer == liArray.length) {
                 nowContainer = liArray.length - 1;
             }
-            if(nowContainer >= 0)
+            if(nowContainer >= 0) {
                 liArray[nowContainer].setAttribute("class", "active");
+                document.getElementById("iframe-manage").setAttribute("src", "taskList.html");
+            }
             else {
                 document.getElementById("iframe-manage").setAttribute("src","noContainerTip.html");
             }
@@ -167,6 +169,8 @@ function addContainerToDatabase() {
                     liArray[nowContainer].setAttribute("class", "");
                     nowContainer = this.num;
                     liArray[nowContainer].setAttribute("class", "active");
+
+                    localStorage.setItem("containername",containers[nowContainer]);
                 };
                 var a = document.createElement("a");
                 a.setAttribute("href","taskList.html");

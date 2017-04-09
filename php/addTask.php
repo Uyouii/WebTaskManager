@@ -11,6 +11,8 @@ $ddl = $_POST["ddl"];
 $time = $_POST["time"];
 $name = $_POST["name"];
 $description = $_POST["description"];
+$email = $_POST["email"];
+$containername = $_POST["containername"];
 
 
 //链接MySql数据库
@@ -27,7 +29,7 @@ $response = array('type'=>1,'name'=>$name);
 
 if($ddl != '' && $name != '') {
     //插入数据
-    $sql = "insert into tasks (taskDDL,taskName,taskTime,taskDescription) values ('$ddl','$name','$time','$description');";
+    $sql = "insert into tasks (taskDDL,taskName,taskTime,taskDescription,email,containername) values ('$ddl','$name','$time','$description','$email','$containername');";
 
     if ($conn->query($sql) === TRUE) {
         echo json_encode($response);

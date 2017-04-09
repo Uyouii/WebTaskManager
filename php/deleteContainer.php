@@ -22,9 +22,10 @@ if (!$conn) {
 
 $response = array('type'=>1);
 
-$sql = "delete from containers where containername = '$containername' and email = '$email';";
+$sql1 = "delete from containers where containername = '$containername' and email = '$email';";
+$sql2 = "delete from tasks where  email = '$email' && containername = '$containername';";
 
-if ($conn->query($sql) === TRUE) {
+if ($conn->query($sql1) == TRUE && $conn->query($sql2) == TRUE) {
     echo json_encode($response);
 } else {
     $response['type'] = 0;

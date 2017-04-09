@@ -9,14 +9,21 @@ var failDelete = [];        //记录没有成功删除的行，一般不存在
 var deleteLines = [];       //记录准备删除的行号
 var deleteLine = [];       //记录准备删除的行号
 var containername;
+var email;
+
 
 window.onload = function () {
-    //containername = localStorage.getItem("containername");
-    //document.getElementById("title").innerText = containername;
 
+    email = getCookie("email");
+    if(email == "") {
+        window.location.href = "Login.html";
+    }
+    else {
+        containername = localStorage.getItem("containername");
 
-    fillTable();
-    setInterval("setRemainingTime()",1000);
+        fillTable();
+        setInterval("setRemainingTime()", 1000);
+    }
 
 
 };
@@ -24,6 +31,11 @@ window.onload = function () {
 //从数据库获取数据后填充表格
 function fillTable() {
     $.post("../php/taskList.php",
+        {
+            email:email,
+            containername:containername
+        },
+
         function(data){
             showData = JSON.parse(data);
             addDataTable(showData);
@@ -202,6 +214,8 @@ function deleteRow() {
 function deleteOneInDB(taskDDL,taskName,line,update) {
     $.post("../php/deleteTask.php",
         {
+            email : email,
+            containername : containername,
             name: taskName,
             ddl : taskDDL
         },
@@ -298,7 +312,9 @@ function modifyDatabase() {
         name: name,
         ddl : ddl,
         time : time,
-        description : description
+        description : description,
+        email:email,
+        containername:containername
     },
     function(data){
         var obj = JSON.parse(data);
@@ -325,3 +341,16 @@ function modifyDatabase() {
 // $(function () {
 //     $("[data-toggle='popover']").popover();
 // });
+
+
+function getCookie(cname)
+{
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++)
+    {
+        var c = ca[i].trim();
+        if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
