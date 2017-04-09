@@ -7,6 +7,7 @@
     <title>addTask</title>
     <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="../js/bootstrap.js"></script>
+    <script src="../js/login.js"></script>
 
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/taskManager.css"/>
@@ -14,71 +15,100 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="col-lg-4 col-sm-6 col-xs-12">
-        <ul class="nav nav-tabs">
-            <li>
-                <a data-toggle="tab" href="#login">Login</a>
-            </li>
+<div class="container-fluid" id="screen" >
+    <div class="row">
+        <div class="col-lg-offset-4 col-lg-4 col-sm-offset-3 col-sm-6 col-xs-12" id="workspace">
+            <ul class="nav nav-tabs nav-pills">
+                <li class="active">
+                    <a data-toggle="tab" href="#login" style="font-size: 22px">Login</a>
+                </li>
 
-            <li class="active">
+                <li>
+                    <a data-toggle="tab" href="#und-reg"  style="font-size: 22px">Register</a>
+                </li>
 
-                <a data-toggle="tab" href="#und-reg">Register</a>
-            </li>
+            </ul>
 
-        </ul>
+            <div class="tab-content" style="padding-top: 25px;">
+                <!-- Login panel -->
 
-        <div class="tab-content">
-            <!-- Login panel -->
+                <div id="login" class="tab-pane fade in active">
 
-            <div id="login" class="tab-pane fade">
+                    <form role="form" >
+                        <div class="form-group" id="loginEmailGroup">
+                            <label style="color:#AFAFAF; font-size: 16px">email</label>
+                            <input id="loginEmail" type="text" class="form-control" name="userid" maxlength="64" title=""
+                                   style="background-color: #2c2c32; color: #EFEFEF;"/>
+                        </div>
 
-                <form role="form" method="post">
-                    <div class="form-group">
-                        <label>学号/邮箱</label>
-                        <input type="text" class="form-control" name="userid" maxlength="100" title=""/>
-                    </div>
+                        <div class="form-group" id="loginPasswordGroup">
+                            <label style="color:#AFAFAF; font-size: 16px">password</label>
+                            <input id="loginPassword" type="password" class="form-control" name="password" maxlength="64" title=""
+                                   style="background-color: #2c2c32; color: #EFEFEF;"/>
+                        </div>
 
-                    <div class="form-group">
-                        <label>密码</label>
-                        <input type="password" class="form-control" name="password" maxlength="20" title=""/>
-                    </div>
+                        <button type="button" class="btn btn-primary " style="font-size: 16px" onclick=login()>login</button>
 
-                    <button type="submit" class="btn btn-success">登录</button>
+                        <!--<a data-toggle="modal" data-target="#forget-pass" style="margin-top: 6px; float: right; cursor: pointer;">忘记密码</a>-->
+                    </form>
+                </div>
 
-                    <a data-toggle="modal" data-target="#forget-pass" style="margin-top: 6px; float: right; cursor: pointer;">忘记密码</a>
-                </form>
+                <div id="und-reg" class="tab-pane fade">
+
+                    <form role="form" >
+                        <div class="form-group" id="registerNameGroup">
+                            <label style="color:#AFAFAF; font-size: 16px">Name</label>
+                            <input id="registerName" type="text" class="form-control" name="userid" maxlength="64" title=""
+                                   style="background-color: #2c2c32; color: #EFEFEF;"/>
+                        </div>
+
+                        <div class="form-group" id="registerEmailGroup">
+                            <label style="color:#AFAFAF; font-size: 16px">Email</label>
+                            <input id="registerEmail" type="email" class="form-control" name="authpass" title=""
+                                   style="background-color: #2c2c32; color: #EFEFEF;"/>
+                        </div>
+
+                        <div class="form-group" id="registerPasswordGroup">
+                            <label style="color:#AFAFAF; font-size: 16px">Password</label>
+                            <input id="registerPassword" type="password" class="form-control" name="loginpass" maxlength="64" title=""
+                                   style="background-color: #2c2c32; color: #EFEFEF;"/>
+                        </div>
+
+                        <div class="form-group" id="registerPasswordGroup2">
+                            <label style="color:#AFAFAF; font-size: 16px">Confirm Password</label>
+                            <input id="registerPassword2" type="password" class="form-control" name="confirm" maxlength="64" title=""
+                                   style="background-color: #2c2c32; color: #EFEFEF;"/>
+                        </div>
+
+                        <button type="button" class="btn btn-primary" style="font-size: 16px" onclick=register()>Register</button>
+                    </form>
+                </div>
+
             </div>
-
-            <div id="und-reg" class="tab-pane fade in active">
-
-                <form role="form" method="post">
-                    <input type='hidden' name='csrfmiddlewaretoken' value='llHTl5eHya38s9dDELin7FvXw16UsswWfsZ1m03XA2qh7ggJglww3NmCFLyttMkw' />
-                    <div class="form-group">
-                        <label>学号</label>
-                        <input type="text" class="form-control" name="userid" maxlength="100" title=""/>
-                    </div>
-
-                    <div class="form-group">
-                        <label><a href="http://jwbinfosys.zju.edu.cn/default2.aspx">教务网</a>密码</label>
-                        <input type="password" class="form-control" name="authpass" title=""/>
-                    </div>
-
-                    <div class="form-group">
-                        <label>登录密码</label>
-                        <input type="password" class="form-control" name="loginpass" maxlength="20" placeholder="用于登录报名页面的密码" />
-                    </div>
-
-                    <div class="form-group">
-                        <label>确认密码</label>
-                        <input type="password" class="form-control" name="confirm" maxlength="20" title=""/>
-                    </div>
-
-                    <button type="submit" class="btn btn-success">注册</button>
-                </form>
-            </div>
-
+        </div>
     </div>
+    <div class="footer">
+        <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true" style="font-size: 16px;"></span>
+        <span style="font-size: 16px;">copyright©Uyouii</span>
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Tips</h4>
+            </div>
+            <div class="modal-body" id="tipText">在这里添加一些文本</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
 </div>
 
 </body>

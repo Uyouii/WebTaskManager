@@ -8,10 +8,17 @@ var successfulDelete = [];  //记录成功删除的行号
 var failDelete = [];        //记录没有成功删除的行，一般不存在
 var deleteLines = [];       //记录准备删除的行号
 var deleteLine = [];       //记录准备删除的行号
+var containername;
 
 window.onload = function () {
+    //containername = localStorage.getItem("containername");
+    //document.getElementById("title").innerText = containername;
+
+
     fillTable();
     setInterval("setRemainingTime()",1000);
+
+
 };
 
 //从数据库获取数据后填充表格

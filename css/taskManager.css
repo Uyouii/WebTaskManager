@@ -42,3 +42,9 @@ td {
     height: 45px;
 }
 
+.footer{
+    position: absolute;
+    bottom: 0;
+    color: #CFCFCF;
+    padding-bottom: 10px;
+}
