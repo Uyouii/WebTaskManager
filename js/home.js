@@ -31,6 +31,8 @@ var containers = [];
 var nowContainer = -1;
 var liArray = [];
 var liNow;
+var allTaskName = "ALL TASK";
+
 
 window.onload = function () {
     email = getCookie("email");
@@ -65,32 +67,8 @@ function setContainer() {
                 containers[j] = jsondata[j].containername;
             }
             if(containers.length > 0) {
-                nowContainer = 0;
-                localStorage.setItem("containername",containers[0]);
-                document.getElementById("iframe-manage").setAttribute("src","taskList.html");
-                var bar = document.getElementById("containerBar");
-                for(var i = 0; i < containers.length; i++) {
-                    var li = document.createElement("li");
-                    li.setAttribute("role","presentation");
-                    li.num = i;
-                    li.onclick = function () {
-                        if(nowContainer != this.num) {
-                            liArray[nowContainer].setAttribute("class", "");
-                            nowContainer = this.num;
-                            liArray[nowContainer].setAttribute("class", "active");
-                        }
-
-                        localStorage.setItem("containername",containers[nowContainer]);
-                    };
-                    var a = document.createElement("a");
-                    a.setAttribute("href","taskList.html");
-                    a.setAttribute("target","iframe-manage");
-                    a.innerText = containers[i];
-                    li.appendChild(a);
-                    bar.appendChild(li);
-                    liArray[liArray.length] = li;
-                }
-                liArray[nowContainer].setAttribute("class", "active");
+                containers.splice(0,0,allTaskName);
+                addContainerToBar();
             }
             else {
                 document.getElementById("iframe-manage").setAttribute("src","noContainerTip.html");
@@ -99,17 +77,53 @@ function setContainer() {
     );
 }
 
+function addContainerToBar() {
+    nowContainer = 0;
+    localStorage.setItem("containername",containers[0]);
+    document.getElementById("iframe-manage").setAttribute("src","taskList.html");
+    var bar = document.getElementById("containerBar");
+    for(var i = 0; i < containers.length; i++) {
+        var li = document.createElement("li");
+        li.setAttribute("role","presentation");
+        li.num = i;
+        li.onclick = function () {
+            if(nowContainer != this.num) {
+                liArray[nowContainer].setAttribute("class", "");
+                nowContainer = this.num;
+                liArray[nowContainer].setAttribute("class", "active");
+            }
+
+            localStorage.setItem("containername",containers[nowContainer]);
+        };
+        var a = document.createElement("a");
+        a.setAttribute("href","taskList.html");
+        a.setAttribute("target","iframe-manage");
+        a.innerText = containers[i];
+        li.appendChild(a);
+        bar.appendChild(li);
+        liArray[liArray.length] = li;
+    }
+    liArray[nowContainer].setAttribute("class", "active");
+}
+
 function addContainer() {
     $('#addContainerModal').modal('show');
 }
 
 function deleteContainer() {
 
-    var tip = document.getElementById("deleteContainerTipText");
-    tip.innerHTML = "Container " + containers[nowContainer] + "will be deleted.\n" +
-        "And all the tasks in the container will be delete.\n" +
+    if(containers[nowContainer] != allTaskName) {
+        var tip = document.getElementById("deleteContainerTipText");
+        tip.innerHTML = "Container " + containers[nowContainer] + "will be deleted.\n" +
+            "And all the tasks in the container will be delete.\n" +
             "Sure to do that?";
-    $('#deleteContainerModal').modal('show');
+        $('#deleteContainerModal').modal('show');
+    }
+    else {
+        var tip2 = document.getElementById("tipText");
+        tip2.innerHTML = "Can't Delete This Container!.";
+        $('#myModal').modal('show');
+    }
 
 }
 
@@ -129,13 +143,16 @@ function deleteContainerinDatabase() {
             if (nowContainer == liArray.length) {
                 nowContainer = liArray.length - 1;
             }
-            if(nowContainer >= 0) {
+            if(liArray.length == 1) {
+                bar.removeChild(liArray[0]);
+                liArray.splice(0, 1);
+                containers = [];
+                document.getElementById("iframe-manage").setAttribute("src","noContainerTip.html");
+            }
+            else {
                 liArray[nowContainer].setAttribute("class", "active");
                 localStorage.setItem("containername",containers[nowContainer]);
                 document.getElementById("iframe-manage").setAttribute("src", "taskList.html");
-            }
-            else {
-                document.getElementById("iframe-manage").setAttribute("src","noContainerTip.html");
             }
         }
         else {
@@ -159,36 +176,43 @@ function addContainerToDatabase() {
 
     if(containername != "" && ready) {
 
-        var num = getContainerNum();
+        var num = getContainerNum(containername);
         $.post("../php/addContainer.php", {
                 email: email,
                 containername: containername,
                 time: num
             },
             function (data) {
-                var bar = document.getElementById("containerBar");
-                var li = document.createElement("li");
-                li.setAttribute("role","presentation");
-                li.num = liArray.length;
-                li.onclick = function () {
-                    liArray[nowContainer].setAttribute("class", "");
-                    nowContainer = this.num;
-                    liArray[nowContainer].setAttribute("class", "active");
+                if(containers.length == 0) {
+                    containers[0] = allTaskName;
+                    containers[1] = containername;
+                    addContainerToBar();
+                }
+                else {
+                    var bar = document.getElementById("containerBar");
+                    var li = document.createElement("li");
+                    li.setAttribute("role","presentation");
+                    li.num = liArray.length;
+                    li.onclick = function () {
+                        liArray[nowContainer].setAttribute("class", "");
+                        nowContainer = this.num;
+                        liArray[nowContainer].setAttribute("class", "active");
 
-                    localStorage.setItem("containername",containers[nowContainer]);
-                };
-                var a = document.createElement("a");
-                a.setAttribute("href","taskList.html");
-                a.setAttribute("target","iframe-manage");
-                a.innerText = containername;
-                li.appendChild(a);
-                liArray[liArray.length] = li;
-                bar.appendChild(li);
-                containers[containers.length] = containername;
-                if(containers.length == 1) {
-                    nowContainer = 0;
-                    liArray[nowContainer].setAttribute("class", "active");
-                    document.getElementById("iframe-manage").setAttribute("src","taskList.html");
+                        localStorage.setItem("containername",containers[nowContainer]);
+                    };
+                    var a = document.createElement("a");
+                    a.setAttribute("href","taskList.html");
+                    a.setAttribute("target","iframe-manage");
+                    a.innerText = containername;
+                    li.appendChild(a);
+                    liArray[liArray.length] = li;
+                    bar.appendChild(li);
+                    containers[containers.length] = containername;
+                    if(containers.length == 1) {
+                        nowContainer = 0;
+                        liArray[nowContainer].setAttribute("class", "active");
+                        document.getElementById("iframe-manage").setAttribute("src","taskList.html");
+                    }
                 }
             }
         );
@@ -199,10 +223,13 @@ function addContainerToDatabase() {
 }
 
 
+
 //获取container的排序数字
-function getContainerNum() {
+function getContainerNum(name) {
     var date = new Date();
     var year = date.getFullYear();
+    if(name == allTaskName)
+        year -= 100;
     var month = date.getMonth() + 1;
     if(month < 10)
         month = "0" + month;

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>taskList</title>
     <link rel="stylesheet" href="../css/bootstrap.css">
-    <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script src="../js/bootstrap.js"></script>
 
     <script src="../js/taskList.js"></script>
@@ -51,7 +51,7 @@
                     <br>
 
                     <div class="col-md-2">
-                        <button class="btn btn-primary my-button" style="font-size: 120%" id="modifyButton"
+                        <button class="btn btn-primary my-button" style="font-size: 120%;" id="modifyButton"
                                 title="Waring" data-container="body" data-toggle="popover" data-placement="bottom"
                                 data-content="Hasn't select line!"
                                 onclick=modify()>
@@ -60,7 +60,8 @@
                     </div>
 
                     <div class="col-md-2">
-                        <button class="btn btn-primary my-button " style="font-size: 120%" onclick=deleteButton()>
+                        <button class="btn btn-primary my-button " style="font-size: 120%" id="deleteButton"
+                                onclick=deleteButton()>
                             Delete
                         </button>
                     </div>

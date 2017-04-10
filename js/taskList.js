@@ -11,6 +11,7 @@ var deleteLine = [];       //记录准备删除的行号
 var containername;
 var email;
 var hasData = true;
+var allTaskName = "ALL TASK";
 
 window.onload = function () {
 
@@ -20,7 +21,10 @@ window.onload = function () {
     }
     else {
         containername = localStorage.getItem("containername");
-
+        if(containername == allTaskName) {
+            document.getElementById("modifyButton").style.visibility = "hidden";
+            document.getElementById("deleteButton").style.visibility = "hidden";
+        }
         fillTable();
         setInterval("setRemainingTime()", 1000);
     }

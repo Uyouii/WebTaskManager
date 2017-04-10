@@ -6,6 +6,8 @@
  * Time: 16:23
  */
 
+$allTaskName = "ALL TASK";
+
 $email = $_POST["email"];
 $containername = $_POST["containername"];
 
@@ -19,7 +21,9 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM tasks where email = '$email' and containername = '$containername' ORDER BY taskDDL;";
+if($containername != $allTaskName)
+    $sql = "SELECT * FROM tasks where email = '$email' and containername = '$containername' ORDER BY taskDDL;";
+else $sql = "SELECT * FROM tasks where email = '$email' ORDER BY taskDDL;";
 $result = $conn->query($sql);
 $data = array();
 
