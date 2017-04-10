@@ -19,6 +19,10 @@ function setFullHeight() {
     var style = "height: " + height + "px; background-color: #2c2c32";
     document.getElementById("sidebar").setAttribute("style",style);
 
+    var style2 = "max-height: " + Math.floor( height * 0.65) + "px;" +
+        "overflow-y:auto; ";
+    document.getElementById("containerList").setAttribute("style",style2);
+
 }
 
 var email;
@@ -127,6 +131,7 @@ function deleteContainerinDatabase() {
             }
             if(nowContainer >= 0) {
                 liArray[nowContainer].setAttribute("class", "active");
+                localStorage.setItem("containername",containers[nowContainer]);
                 document.getElementById("iframe-manage").setAttribute("src", "taskList.html");
             }
             else {

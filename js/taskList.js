@@ -10,7 +10,7 @@ var deleteLines = [];       //记录准备删除的行号
 var deleteLine = [];       //记录准备删除的行号
 var containername;
 var email;
-
+var hasData = true;
 
 window.onload = function () {
 
@@ -37,8 +37,14 @@ function fillTable() {
         },
 
         function(data){
-            showData = JSON.parse(data);
-            addDataTable(showData);
+            if(data.length > 0) {
+                showData = JSON.parse(data);
+                addDataTable(showData);
+                hasData = true;
+            }
+            else {
+                hasData = false;
+            }
         }
     );
 }
@@ -117,7 +123,7 @@ function addDataTable(data) {
 function setRemainingTime() {
 
     //判断表格内容是否加载出来，如果没有加载出来则重新加载
-    if(document.getElementById("listTable").rows.length <= 1) {
+    if(document.getElementById("listTable").rows.length <= 1 && hasData) {
         clearTable();
         fillTable();
     }

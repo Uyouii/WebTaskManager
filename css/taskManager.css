@@ -48,3 +48,18 @@ td {
     color: #CFCFCF;
     padding-bottom: 10px;
 }
+
+/*滚动条设置*/
+::-webkit-scrollbar {
+    width: 6px;
+    background-color: #2c2c32;
+    border-radius: 10px;
+}
+
+
+
+/*滚动滑块设置*/
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #CFCFCF;
+}
